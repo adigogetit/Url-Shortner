@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="card">
+        <h1>URL Shortener</h1>
+
+        <form class="url-form">
+
+            <div class="form-group">
+                <label>Enter URL:</label>
+                <input type="url" name="url" placeholder="https://example.com" />
+            </div>
+
+            <div class="form-group">
+                <label>Custom Short URL (Optional):</label>
+                <input type="text" name="shortCode" placeholder="custom-alias" />
+
+                <button type="submit">Shorten</button>
+            </div>
+        </form>
+
+        <h2>Shortened URLs</h2>
+
+        <div class="url-list">
+
+        </div>
+    </div>
+    <script>
+        // to get the form data
+        const form = document.querySelector('.url-form');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const url = formData.get('url');
+            const shortCode = formData.get('shortCode')
+
+            console.log(url, shortCode);
+        })
+
+
+    </script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
