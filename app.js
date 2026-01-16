@@ -38,7 +38,7 @@ const server = createServer(async (req, res) => {
             );
         }
 
-        // Handle short URL redirects
+        // to redirect when we click on shorten links 
         const shortCode = req.url.slice(1);
         if (shortCode) {
             try {

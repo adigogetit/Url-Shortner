@@ -11,14 +11,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .card {
     background: #fff;
     width: 420px;
+    max-height: 85vh;          /* card never exceeds screen */
     padding: 30px;
     border-radius: 14px;
     box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;   /* important for scrolling layout */
 }
 
 .card h1 {
@@ -59,7 +63,7 @@ button {
     font-weight: bold;
     cursor: pointer;
 }
-
+ 
 button:hover {
     background: #5a67d8;
 }
@@ -75,6 +79,18 @@ button:hover {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    max-height: 200px;        /* adjust as you like */
+    overflow-y: auto;         /* vertical scrollbar */
+    padding-right: 5px;       /* space for scrollbar */
+}
+
+.url-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.url-list::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
 }
 
 .url-item {
