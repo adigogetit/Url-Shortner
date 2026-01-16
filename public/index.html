@@ -45,6 +45,7 @@
             const url = formData.get('url');
             const shortCode = formData.get('shortCode');
 
+            //  fetch the data
             fetch('/shorten', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

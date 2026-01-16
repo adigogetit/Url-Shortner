@@ -71,7 +71,7 @@ button:hover {
     text-decoration: underline;
 }
 
-/* .url-list {
+.url-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -95,4 +95,4 @@ button:hover {
 .url-item span {
     color: #333;
     word-break: break-all;
-} */
+}
