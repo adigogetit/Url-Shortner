@@ -82,6 +82,21 @@ const server = createServer(async (req, res) => {
             } catch (e) {
                 // File doesn't exist or is empty, use empty object
             }
+
+            // User gives custom code → use it Else generate random one
+            const finalShortCode = shortCode || crypto.randomBytes(4).toString("hex");
+
+            // to check if duplicate shortcode is there
+            if (links[finalShortCode]) {
+                res.writeHead(400, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify({ error: "Short code already exists" }));
+            }
+
+            links[finalShortCode] = url;
+            await writeFile(path.join("data", "link.json"), JSON.stringify(links, null, 2));
+
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ shortUrl: `http://localhost:${PORT}/${finalShortCode}` }));
         });
     }
 });
