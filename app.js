@@ -56,7 +56,7 @@ const server = createServer(async (req, res) => {
         res.writeHead(404, { "Content-Type": "text/plain" });
         res.end("Not Found");
     }
-
+    
     // handel when Shorten is clicked
     if (req.method === "POST" && req.url === "/shorten") {
         let body = "";
@@ -67,36 +67,6 @@ const server = createServer(async (req, res) => {
         req.on("end", async () => {
             console.log(body);
             const { url, shortCode } = JSON.parse(body);
-
-            //  if url is not there
-            if (!url) {
-                res.writeHead(400, { "Content-Type": "application/json" });
-                return res.end(JSON.stringify({ error: "URL is required" }));
-            }
-
-            // to read the data which is inside link.json
-            let links = {};
-            try {
-                const data = await readFile(path.join("data", "link.json"), "utf8");
-                links = JSON.parse(data);
-            } catch (e) {
-                // File doesn't exist or is empty, use empty object
-            }
-
-            // User gives custom code → use it Else generate random one
-            const finalShortCode = shortCode || crypto.randomBytes(4).toString("hex");
-
-            // to check if duplicate shortcode is there
-            if (links[finalShortCode]) {
-                res.writeHead(400, { "Content-Type": "application/json" });
-                return res.end(JSON.stringify({ error: "Short code already exists" }));
-            }
-
-            links[finalShortCode] = url;
-            await writeFile(path.join("data", "link.json"), JSON.stringify(links, null, 2));
-
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ shortUrl: `http://localhost:${PORT}/${finalShortCode}` }));
         });
     }
 });
