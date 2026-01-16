@@ -43,14 +43,28 @@
 
             const formData = new FormData(event.target);
             const url = formData.get('url');
-            const shortCode = formData.get('shortCode')
+            const shortCode = formData.get('shortCode');
 
-            console.log(url, shortCode);
-        })
-
-
+            fetch('/shorten', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url, shortCode })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    const urlList = document.querySelector('.url-list');
+                    const item = document.createElement('div');
+                    item.className = 'url-item';
+                    item.innerHTML = `<a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a><span> -> ${url}</span>`;
+                    urlList.appendChild(item);
+                }
+            })
+            .catch(err => alert('Error: ' + err.message));
+        });
     </script>
-    <script src="app.js"></script>
 
 </body>
 
