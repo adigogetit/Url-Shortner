@@ -67,6 +67,21 @@ const server = createServer(async (req, res) => {
         req.on("end", async () => {
             console.log(body);
             const { url, shortCode } = JSON.parse(body);
+
+            //  if url is not there
+            if (!url) {
+                res.writeHead(400, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify({ error: "URL is required" }));
+            }
+
+            // to read the data which is inside link.json
+            let links = {};
+            try {
+                const data = await readFile(path.join("data", "link.json"), "utf8");
+                links = JSON.parse(data);
+            } catch (e) {
+                // File doesn't exist or is empty, use empty object
+            }
         });
     }
 });
